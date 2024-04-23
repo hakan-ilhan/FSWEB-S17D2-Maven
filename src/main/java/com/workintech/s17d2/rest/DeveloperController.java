@@ -1,5 +1,6 @@
 package com.workintech.s17d2.rest;
 
+import com.workintech.s17d2.model.JuniorDeveloper;
 import com.workintech.s17d2.tax.DeveloperTax;
 import jakarta.annotation.PostConstruct;
 import com.workintech.s17d2.model.Developer;
@@ -36,13 +37,16 @@ public class DeveloperController {
     @PostMapping("/developers")
     public Developer addDev(@RequestBody Developer developer){
         if(developer.getExperience() == Experience.JUNIOR){
-            developer.setSalary(developer.getSalary() - developerTax.getSimpleTaxRate());
+            double tax = developer.getSalary() * (developerTax.getSimpleTaxRate() / 100);
+            developer.setSalary(developer.getSalary() - tax);
             developers.put(developer.getId(),developer);
         } else if(developer.getExperience() == Experience.MID){
-            developer.setSalary(developer.getSalary() - developerTax.getMiddleTaxRate());
+            double tax = developer.getSalary() * (developerTax.getSimpleTaxRate() / 100);
+            developer.setSalary(developer.getSalary() - tax);
             developers.put(developer.getId(),developer);
         } else if(developer.getExperience() == Experience.SENIOR){
-            developer.setSalary(developer.getSalary() - developerTax.getUpperTaxRate());
+            double tax = developer.getSalary() * (developerTax.getSimpleTaxRate() / 100);
+            developer.setSalary(developer.getSalary() - tax);
             developers.put(developer.getId(),developer);
         }
         return developer;
